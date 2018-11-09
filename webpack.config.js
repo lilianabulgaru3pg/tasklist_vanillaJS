@@ -3,15 +3,16 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: { main: './src/index.js' },
+    entry: {
+        main: './src/index.js'
+    },
     mode: 'development',
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js'
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
@@ -20,12 +21,12 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                use: [
-                    {
-                        loader: "html-loader",
-                        options: { minimize: true }
+                use: [{
+                    loader: "html-loader",
+                    options: {
+                        minimize: true
                     }
-                ]
+                }]
             },
             {
                 test: /\.css$/,
@@ -45,7 +46,7 @@ module.exports = {
     ],
     devServer: {
         compress: true,
-        port: 3000,
+        port: 8080,
         watchContentBase: true
     }
 };
