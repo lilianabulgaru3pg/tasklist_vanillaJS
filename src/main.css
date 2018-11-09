@@ -1,0 +1,95 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+body {
+	font: 16px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	line-height: 1.6em;
+	background: white;
+	min-height: 100%;
+	margin: 0 auto;
+	color: #474242
+}
+
+.hidden {
+	display: none;
+}
+
+.center-block {
+	display: block;
+	margin: auto;
+}
+
+.center-content {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-container {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+}
+
+.flex-item-1 {
+	flex-basis: 40%;
+	align-self: stretch;
+}
+
+.flex-item-2 {
+	flex-basis: 60%;
+	align-self: stretch;
+}
+
+.right-card-1 {
+	background: #37a0e5;
+}
+
+.card-label {
+	color: white;
+	font-size: 3em;
+}
+
+input[type="text"] {
+	border: 1px solid #7bcdfd;
+	background-color: white;
+	border-radius: 2px;
+	line-height: 1.6em;
+	margin-bottom: 1em;
+	width: 100%;
+}
+
+.button-login {
+	margin: 0 auto;
+	width: 100%;
+	padding: 0.75em 0;
+	background-color: white;
+	border: 2px solid #37a0e5;
+	color: #37a0e5;
+}
+
+form {
+	flex-basis: 60%;
+}
+
+form h3 {
+	text-align: center;
+	font-size: 2em;
+}
+
+@media (max-width:480px) {
+	.flex-container {
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+
+	.flex-item-2 {
+		order: -1;
+		flex-basis: auto;
+	}
+}

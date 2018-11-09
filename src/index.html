@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" S>
+    <title>Todo List</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body class="flex-container">
+    <main class="flex-item-1">
+        <div class="left-card-1 center-content">
+            <form name="loginform" id="loginform" enctype="multipart/form-data">
+                <h3>Login</h3>
+                <label for="user_name">Username:</label><br>
+                <input id="username" type="text" name="username" value="" required>
+                <br>
+                <label for="password">Password:</label><br>
+                <input id="password" type="text" name="password" value="" required>
+                <br><br>
+                <input class="button-login" type="submit" value="Login">
+            </form>
+        </div>
+        <div class="left-card-2 hidden">
+            <div>Username</div>
+            <ul>
+                <li>Today</li>
+            </ul>
+            <button>Create Task</button>
+        </div>
+    </main>
+
+    <aside class="flex-item-2">
+        <div class="right-card-1 center-content">
+            <h3 class="card-label">To-do List</h3>
+        </div>
+        <div class="right-card-2 hidden">
+            <header>
+                <h2>TaskName</h2>
+                <div>
+                    <input type="text" placeholder="Search">
+                    <button>Search</button>
+                </div>
+            </header>
+            <section>
+                <ul>
+                    <li>item1</li>
+                    <li>item1</li>
+                    <li>item1</li>
+                </ul>
+                <button>Add</button>
+            </section>
+        </div>
+    </aside>
+</body>
+
+</html>
