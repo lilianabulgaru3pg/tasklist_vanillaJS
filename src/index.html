@@ -4,11 +4,12 @@
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" S>
     <title>Todo List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="main.css">
 </head>
 
 <body class="show">
-    <div class="flex-container page-1 ">
+    <div class="flex-container page-1 hidden">
         <main class="flex-item-1 center-content">
             <form name="loginform" id="loginform" enctype="multipart/form-data" class="left-card-1">
                 <h3>Login</h3>
@@ -18,28 +19,28 @@
                 <label for="password">Password:</label><br>
                 <input id="password" type="text" name="password" value="" required>
                 <br><br>
-                <input class="button-login" type="submit" value="Login">
+                <input class="button-login button-style-1" type="submit" value="Login">
             </form>
         </main>
-        <aside class="flex-item-2 center-content right-card-1">
+        <aside class="flex-item-2 center-content right-card-1 blue-bg">
             <h3 class="card-label">To-do List</h3>
         </aside>
     </div>
     <div class="flex-container page-2 ">
-        <main class="left-card-2 ">
-            <div>Username</div>
+        <main class="flex-item-1 left-card-2 blue-bg">
+            <div class="user-content">Username</div>
             <ul>
                 <li>Today</li>
             </ul>
-            <button>Create Task</button>
+            <button class="button-task button-style-1">Create Task</button>
         </main>
 
-        <div class="right-card-2 ">
+        <div class="flex-item-2 right-card-2 ">
             <header>
                 <h2>TaskName</h2>
                 <div>
                     <input type="text" placeholder="Search">
-                    <button>Search</button>
+                    <button class="button-search button-style-1">Search</button>
                 </div>
             </header>
             <section>
