@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="main.css">
 </head>
 
-<body class="flex-container">
-    <main class="flex-item-1">
-        <div class="left-card-1 center-content">
-            <form name="loginform" id="loginform" enctype="multipart/form-data">
+<body class="show">
+    <div class="flex-container page-1 ">
+        <main class="flex-item-1 center-content">
+            <form name="loginform" id="loginform" enctype="multipart/form-data" class="left-card-1">
                 <h3>Login</h3>
                 <label for="user_name">Username:</label><br>
                 <input id="username" type="text" name="username" value="" required>
@@ -20,21 +20,21 @@
                 <br><br>
                 <input class="button-login" type="submit" value="Login">
             </form>
-        </div>
-        <div class="left-card-2 hidden">
+        </main>
+        <aside class="flex-item-2 center-content right-card-1">
+            <h3 class="card-label">To-do List</h3>
+        </aside>
+    </div>
+    <div class="flex-container page-2 ">
+        <main class="left-card-2 ">
             <div>Username</div>
             <ul>
                 <li>Today</li>
             </ul>
             <button>Create Task</button>
-        </div>
-    </main>
+        </main>
 
-    <aside class="flex-item-2">
-        <div class="right-card-1 center-content">
-            <h3 class="card-label">To-do List</h3>
-        </div>
-        <div class="right-card-2 hidden">
+        <div class="right-card-2 ">
             <header>
                 <h2>TaskName</h2>
                 <div>
@@ -51,7 +51,7 @@
                 <button>Add</button>
             </section>
         </div>
-    </aside>
+    </div>
 </body>
 
 </html>
