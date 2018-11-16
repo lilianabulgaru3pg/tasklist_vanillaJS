@@ -23,6 +23,11 @@ h3 {
 	display: none !important;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 .center-block {
 	display: block;
 	margin: auto;
@@ -47,15 +52,18 @@ ul {
 	align-items: stretch;
 }
 
-.flex-item-1 {
+.flex-item-1,
+.flex-item-3 {
 	flex-basis: 30%;
 	align-self: stretch;
 }
 
-.flex-item-2 {
+.flex-item-2,
+.flex-item-4 {
 	flex-basis: 70%;
 	align-self: stretch;
 }
+
 
 .blue-bg {
 	background: #37a0e5;
@@ -75,6 +83,10 @@ input[type="text"] {
 
 .left-card-2 {
 	position: relative;
+}
+
+.left-card-2 ul li {
+	color: white;
 }
 
 .button-task {
@@ -120,7 +132,7 @@ input[type="text"] {
 }
 
 header h2 {
-	background-color: rgba(192, 191, 191, 0.829);
+	background-color: rgb(219, 217, 217);
 	padding: 0.75em 0;
 	margin: 0 auto;
 	margin-bottom: 2%;
@@ -171,6 +183,57 @@ header h2 {
 	right: 1em;
 	bottom: 1em;
 }
+
+.checkbox input[type="checkbox"] {
+    opacity: 0;
+}
+
+.checkbox label::before{
+    content: "";
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    border: 1px solid;   
+}
+
+.checkbox label::after {
+    content: "";
+    display: inline-block;
+    height: 6px;
+    width: 9px;
+    border-left: 2px solid;
+    border-bottom: 2px solid;
+    transform: rotate(-45deg);
+}
+
+.checkbox label {
+	position: relative;
+	
+}
+.checkbox label::before,
+.checkbox label::after {
+	position: absolute;
+}
+
+.checkbox label::before {
+	top: 0;
+	right: 4em;	
+}
+
+.checkbox label::after {
+    right: 4.2em;
+	top: 0.18em;
+	color: #37a0e5;
+}
+
+.checkbox input[type="checkbox"] + label::after {
+    content: none;
+}
+
+.checkbox input[type="checkbox"]:checked + label::after {
+    content: "";
+}
+
 
 @media (max-width:480px) {
 	.flex-container {
