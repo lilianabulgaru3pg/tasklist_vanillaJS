@@ -6,10 +6,11 @@
     <title>Todo List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
     <link rel="stylesheet" href="main.css">
+    <script src="index.js" defer></script>
 </head>
 
-<body class="show">
-    <div class="flex-container page-1 hidden">
+<body class="show-login">
+    <div class="flex-container page-1">
         <main class="flex-item-1 center-content">
             <form name="loginform" id="loginform" enctype="multipart/form-data" class="left-card-1">
                 <h3>Login</h3>
@@ -26,31 +27,7 @@
             <h3 class="card-label">To-do List</h3>
         </aside>
     </div>
-    <div class="flex-container page-2 ">
-        <main class="flex-item-1 left-card-2 blue-bg">
-            <h2 class="user-content">Username</h2>
-            <ul>
-                <li>Today</li>
-            </ul>
-            <button class="button-task button-style-1">Create Task</button>
-        </main>
 
-        <div class="flex-item-2 right-card-2">
-            <header>
-                <h2>Task Name</h2>
-                <input type="text" placeholder="Search" class="search-input">
-                <button class=" button-style-1 button-search">Search</button>
-            </header>
-            <section>
-                <ul>
-                    <li>item1</li>
-                    <li>item1</li>
-                    <li>item1</li>
-                </ul>
-                <button class="button-add">+</button>
-            </section>
-        </div>
-    </div>
 </body>
 
 </html>
