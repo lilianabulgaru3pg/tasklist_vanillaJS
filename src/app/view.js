@@ -7,8 +7,8 @@ export default class View {
 
     showPage2Content(items) {
 
-        var child = document.body.getElementsByClassName('page-1');
-        document.body.removeChild(child[0]);
+        var child = document.body.querySelector('.page-1');
+        document.body.removeChild(child);
 
         var fragment = document.createDocumentFragment();
         let divEl = this.createChildNode(...[fragment, 'div', 'flex-container page-2']);
@@ -17,6 +17,7 @@ export default class View {
         let taskNodes = this.createTasks(user.tasks);
         mainEl.appendChild(taskNodes);
         let addTaskBtnEl = this.createChildNode(...[mainEl, 'button', 'button-task button-style-1', 'Add Task']);
+        addTaskBtnEl.addEventListener('click', this.delegate.addTaskBtn(event))
 
         let asideEl = this.createChildNode(...[divEl, 'aside', 'flex-item-4 right-card-2']);
         let headerEl = this.createChildNode(asideEl, 'header');
@@ -24,7 +25,7 @@ export default class View {
         let searchEl = this.createChildNode(...[headerEl, 'input', 'search-input', null, { type: 'text' }, { placeholder: 'Search' }])
         let searchBtnEl = this.createChildNode(...[headerEl, 'button', 'button-search  button-style-1', 'Search']);
         let sectionEl = this.createChildNode(asideEl, 'section', 'items-section');
-        sectionEl.addEventListener('click', this.taskItemDone);
+        sectionEl.addEventListener('click', this.delegate.taskItemDone(event));
         let itemsChildNodes = this.createTaskItems(items);
         sectionEl.appendChild(itemsChildNodes);
         let addItemBtnEl = this.createChildNode(...[sectionEl, 'button', 'button-add', '+']);
@@ -54,10 +55,6 @@ export default class View {
         var itemsChildNodes = this.createTaskItems(taskItems);
         fragment.appendChild(itemsChildNodes);
         sectionEl.appendChild(fragment);
-    }
-
-    taskItemDone() {
-
     }
 
     createTasks(tasks) {

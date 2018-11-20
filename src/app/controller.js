@@ -6,7 +6,7 @@ export default class ViewController {
     constructor() {
         this.view = new View();
         this.view.delegate = this;
-        this.form = document.getElementById("loginform");
+        this.form = document.querySelector("#loginform");
         this.init();
     }
 
@@ -14,7 +14,7 @@ export default class ViewController {
         this.form.onsubmit = ((event) => {
             event.preventDefault();
             var formData = new FormData(this.form);
-            var response = RequestManager.postData(formData);
+            var response = RequestManager.postData('user-tasks', formData);
             response.then((res) => this.responseCallback(res)).catch((err) => console.log(err))
         });
     }
@@ -46,4 +46,12 @@ export default class ViewController {
         console.log('onpopstate');
     }
 
+    addTaskBtn(event) {
+        console.log('addTaskBtn');
+    }
+
+    taskItemDone(event) {
+        console.log('taskItemDone');
+
+    }
 }

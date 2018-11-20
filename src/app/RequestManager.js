@@ -24,10 +24,10 @@ class RequestManager {
         }
     }
 
-    async postData(data) {
+    async postData(url, data) {
         try {
             console.log('data', data);
-            var response = await fetch(`${this.baseUrl}/user-tasks`, {
+            var response = await fetch(`${this.baseUrl}/${url}`, {
                 method: 'POST',
                 body: data
             });
@@ -45,7 +45,6 @@ class RequestManager {
             throw Error(err);
         }
     }
-
     async getJSON(response) {
         try {
             const responseBody = await response.json();
