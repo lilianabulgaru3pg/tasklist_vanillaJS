@@ -144,6 +144,7 @@ header h2 {
 .button-search {
 	width: 15%;
 	padding: 0;
+	font-size: 1em;
 }
 
 .button-search,
@@ -184,7 +185,7 @@ header h2 {
 	bottom: 1em;
 }
 
-.checkbox input[type="checkbox"] {
+/* .checkbox input[type="checkbox"] {
     opacity: 0;
 }
 
@@ -217,7 +218,6 @@ header h2 {
 
 .checkbox label::before {
 	top: 0;
-	right: 4em;	
 }
 
 .checkbox label::after {
@@ -231,8 +231,9 @@ header h2 {
 }
 
 .checkbox input[type="checkbox"]:checked + label::after {
-    content: "";
+    content: ""; 
 }
+*/
 
 
 @media (max-width:480px) {

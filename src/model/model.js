@@ -1,10 +1,17 @@
-var user = {
+export var user = {
     name: '',
     tasks: [{
-        id: '',
+        _id: '',
         title: '',
-        items: []
+        items: [taskItems]
     }]
 };
 
-export { user };
+
+export var taskItems = {
+    _id: '',
+    task_id: '',
+    text: '',
+    completed: false
+};
+

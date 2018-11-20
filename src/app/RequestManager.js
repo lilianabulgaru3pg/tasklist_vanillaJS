@@ -5,6 +5,25 @@ class RequestManager {
         this.baseUrl = baseUrl;
     }
 
+    async getItemsForTask(url) {
+        try {
+            console.log('data', url);
+            var response = await fetch(`${this.baseUrl}/${url}`)
+
+            if (response.status === 200) {
+                let responseJSON = this.getJSON(response);
+                return responseJSON;
+            }
+
+            if (response.status >= 200) {
+                throw Error('Error:', response.status)
+            }
+
+        } catch (err) {
+            throw Error(err);
+        }
+    }
+
     async postData(data) {
         try {
             console.log('data', data);
@@ -29,7 +48,6 @@ class RequestManager {
 
     async getJSON(response) {
         try {
-            console.log("response", response)
             const responseBody = await response.json();
             return responseBody;
         } catch (err) {

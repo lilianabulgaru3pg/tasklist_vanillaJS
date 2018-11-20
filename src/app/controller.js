@@ -1,11 +1,11 @@
 import { user } from "../model/model.js"
 import View from "./view"
 import RequestManager from "./RequestManager"
-// import {  } from "util";
 
 export default class ViewController {
     constructor() {
         this.view = new View();
+        this.view.delegate = this;
         this.form = document.getElementById("loginform");
         this.init();
     }
@@ -15,24 +15,35 @@ export default class ViewController {
             event.preventDefault();
             var formData = new FormData(this.form);
             var response = RequestManager.postData(formData);
-            response.then((res) => this.responseCallback(res))
-            response.catch((err) => console.log(err))
+            response.then((res) => this.responseCallback(res)).catch((err) => console.log(err))
         });
     }
 
     responseCallback(response) {
-        user.name = document.getElementById("username").value;
         user.tasks = response;
-        let tasks = user.tasks;
+        user.name = document.getElementById("username").value;
         history.pushState({}, "user-task", "user-task");
-        this.view.showPage2Content(tasks);
+        let firstTask = response[0];
+        console.log('firstTask', firstTask);
+        let itemsResponse = RequestManager.getItemsForTask(`user-tasks/${firstTask._id}/items`);
+        itemsResponse.then((res) => {
+            this.view.showPage2Content(res);
+        }).catch(err => console.log(err));
+    }
+
+    onTaskLinkClick(event) {
+        event.preventDefault();
+        let href = event.target.getAttribute('href');
+        let response = RequestManager.getItemsForTask(href);
+        console.log('url', href);
+        response.then((res) => {
+            console.log('recreateTaskItems with items', res);
+            this.view.recreateTaskItems(res);
+        }).catch(err => console.log(err));
     }
 
     onpopstate(event) {
         console.log('onpopstate');
     }
 
-    onhashchange(event) {
-        console.log('onhashchange');
-    }
 }
