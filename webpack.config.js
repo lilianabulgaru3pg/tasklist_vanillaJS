@@ -49,6 +49,16 @@ module.exports = {
         contentBase: [path.join(__dirname, 'index.html'), path.join(__dirname, 'main.css')],
         compress: true,
         port: 3000,
-        watchContentBase: true
+        watchContentBase: true,
+        proxy: {
+            '/user-task': 'http://localhost:3000/user-task'
+        },
+        historyApiFallback: true,
+        watchOptions: { aggregateTimeout: 300, poll: 1000 },
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            // "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+        }
     }
 };
