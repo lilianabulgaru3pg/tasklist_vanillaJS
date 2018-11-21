@@ -242,6 +242,9 @@ header h2 {
 }
 .add-item-input{
 	position: relative;
+	border: 1px solid #7bcdfd;
+	background-color: rgba(188, 220, 248, 0.897);
+	border-radius: 2px;
 }
 
 .add-item-dialog {
@@ -275,10 +278,11 @@ header h2 {
 
 .hide-dialog {
 	animation-name: hide-item-dialog;
-	animation-duration: 1s;
+	animation-duration: 0.9s;
 	animation-iteration-count: 1;
 	animation-fill-mode: forwards;
 	animation-delay: 0s;
+	animation-timing-function: ease-in;
 }
 
 @keyframes hide-item-dialog{
