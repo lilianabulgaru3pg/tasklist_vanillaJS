@@ -25,7 +25,7 @@ export default class View {
         let taskNodes = this.createTasks(user.tasks);
         mainEl.appendChild(taskNodes);
 
-        let addTaskEl = this.createChildNode(mainEl, 'input', 'add-task-input', null, { type: 'text' }, { placeholder: 'Search' })
+        let addTaskEl = this.createChildNode(mainEl, 'input', 'add-task-input', null, { type: 'text' })
         let addTaskBtnEl = this.createChildNode(mainEl, 'button', 'button-task button-style-1', 'Add Task');
         addTaskBtnEl.addEventListener('click', (event) => this.delegate.createTaskBtn(event));
         addTaskBtnEl.addEventListener('mouseover', (event) => this.showAddTaskInput(event));
@@ -41,8 +41,15 @@ export default class View {
         let itemsChildNodes = this.createTaskItems(items);
         sectionEl.appendChild(itemsChildNodes);
         let addItemBtnEl = this.createChildNode(sectionEl, 'button', 'button-add', '+');
+        addItemBtnEl.addEventListener('click', (event) => this.showAddItemView(event));
+        let addItemDiv = this.createChildNode(addItemBtnEl, 'div', 'add-item-div', null, '');
+        let addItemEl = this.createChildNode(addItemDiv, 'input', 'add-item-input', null, { type: 'text' })
 
         document.body.appendChild(fragment);
+    }
+    showAddItemView(event) {
+        event.preventDefault();
+
     }
 
     showAddTaskInput(event) {
@@ -60,7 +67,6 @@ export default class View {
             input.classList.remove('show-input');
         }
     }
-
 
     createTaskItems(taskItems) {
         var taskFragment = document.createDocumentFragment();

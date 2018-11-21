@@ -211,7 +211,7 @@ header h2 {
 
 .right-card-2 section {
 	background-color: white;
-	padding: 3em;
+	padding: 2em;
 	margin: 1em;
 	height: 70%;
 	position: relative;
@@ -227,6 +227,18 @@ header h2 {
 	position: absolute;
 	right: 1em;
 	bottom: 1em;
+}
+
+.add-item-div {
+	height: 3em;
+	width: 14em;
+	padding: 1em;
+	background-color: #37a0e5;
+	border: 1.6px solid #379fe5c7;
+	color: white;
+	position: absolute;
+	bottom: 3em;
+	right: 3em;
 }
 
 /* .checkbox input[type="checkbox"] {
