@@ -89,12 +89,56 @@ input[type="text"] {
 	color: white;
 }
 
+.add-task-input,
 .button-task {
 	width: 100%;
 	position: absolute;
-	bottom: 0;
 	left: 0;
+	bottom: 0;
 }
+
+.add-task-input {
+	box-sizing: border-box;
+	visibility: hidden;
+	height: 2em;
+}
+
+.show-input {
+	animation-name: show-add-task;
+	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+@keyframes show-add-task{
+	0%   {
+		bottom: 0; 
+		visibility: hidden;
+	}
+	100% {
+		bottom: 3em;
+		visibility: visible 
+	}
+} 
+
+.hide-input {
+	animation-name: hide-add-task;
+	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+@keyframes hide-add-task{
+	0% {
+		bottom: 3em;
+		visibility: visible 
+	}
+	100%   {
+		bottom: 0; 
+		visibility: hidden;
+	}
+	
+} 
 
 .button-login {
 	margin: 0 auto;

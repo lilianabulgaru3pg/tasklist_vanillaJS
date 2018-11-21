@@ -24,20 +24,21 @@ class RequestManager {
         }
     }
 
-    async postData(url, data) {
+    async postData(url, data, headersData) {
         try {
-            console.log('data', data);
+            console.log('data', data, 'url', `${this.baseUrl}/${url}`, headersData);
             var response = await fetch(`${this.baseUrl}/${url}`, {
                 method: 'POST',
-                body: data
+                body: data,
+                headers: headersData
             });
             console.log("response", response)
-            if (response.status === 200) {
+            if (response.status >= 200 || response.status < 300) {
                 let responseJSON = this.getJSON(response);
                 return responseJSON;
             }
 
-            if (response.status >= 200) {
+            if (response.status >= 300) {
                 throw Error('Error:', response.status)
             }
 

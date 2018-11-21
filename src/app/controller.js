@@ -14,7 +14,7 @@ export default class ViewController {
         this.form.onsubmit = ((event) => {
             event.preventDefault();
             var formData = new FormData(this.form);
-            var response = RequestManager.postData('user-tasks', formData);
+            var response = RequestManager.postData('user-tasks', formData, {});
             response.then((res) => this.responseCallback(res)).catch((err) => console.log(err))
         });
     }
@@ -22,18 +22,21 @@ export default class ViewController {
     responseCallback(response) {
         user.tasks = response;
         user.name = document.getElementById("username").value;
-        history.pushState({}, "user-task", "user-task");
+        history.pushState({}, "User Tasks", "user-tasks");
         let firstTask = response[0];
         console.log('firstTask', firstTask);
         let itemsResponse = RequestManager.getItemsForTask(`user-tasks/${firstTask._id}/items`);
         itemsResponse.then((res) => {
             this.view.showPage2Content(res);
-        }).catch(err => console.log(err));
+        }).catch((err) => console.log(err));
     }
 
     onTaskLinkClick(event) {
         event.preventDefault();
-        let href = event.target.getAttribute('href');
+        var href = event.target.getAttribute('href');
+        // var title = event.target.getAttribute('text');
+        // history.pushState({}, title, href);
+        if (href == undefined) { return }
         let response = RequestManager.getItemsForTask(href);
         console.log('url', href);
         response.then((res) => {
@@ -46,12 +49,20 @@ export default class ViewController {
         console.log('onpopstate');
     }
 
-    addTaskBtn(event) {
-        console.log('addTaskBtn');
+    createTaskBtn(event) {
+        event.preventDefault();
+        var addtaskInput = document.body.querySelector('.add-task-input');
+        if (!addtaskInput.value) return;
+        console.log('addtaskInput.value', addtaskInput.value);
+        let response = RequestManager.postData('user-tasks/add-task', JSON.stringify({ title: addtaskInput.value }), {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        response.then((newTask) => this.view.addNewTask(newTask)).catch((err) => console.log(err))
+        addtaskInput.value = '';
     }
 
     taskItemDone(event) {
-        console.log('taskItemDone');
 
     }
 }

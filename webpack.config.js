@@ -51,14 +51,15 @@ module.exports = {
         port: 3000,
         watchContentBase: true,
         proxy: {
-            '/user-task': 'http://localhost:3000/user-task'
+            '/user-tasks': 'http://localhost:3000/user-tasks',
+            '/user-tasks/add-task': 'http://localhost:3000/user-tasks/add-task',
         },
         historyApiFallback: true,
         watchOptions: { aggregateTimeout: 300, poll: 1000 },
         headers: {
-            "Access-Control-Allow-Origin": "*"
-            // "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-            // "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
         }
     }
 };
