@@ -42,21 +42,34 @@ export default class View {
         sectionEl.appendChild(itemsChildNodes);
         let addItemBtnEl = this.createChildNode(sectionEl, 'button', 'button-add', '+');
         addItemBtnEl.addEventListener('click', (event) => this.showAddItemView(event));
-        let addItemDiv = this.createChildNode(addItemBtnEl, 'div', 'add-item-div', null, '');
+        let addItemDiv = this.createChildNode(addItemBtnEl, 'div', 'add-item-dialog');
         let addItemEl = this.createChildNode(addItemDiv, 'input', 'add-item-input', null, { type: 'text' })
 
         document.body.appendChild(fragment);
     }
     showAddItemView(event) {
         event.preventDefault();
-
+        var dialog = document.body.querySelector('.add-item-dialog');
+        var input = document.body.querySelector('.add-item-input');
+        if (dialog.classList.contains('show-dialog')) {
+            dialog.classList.add('hide-dialog');
+            dialog.classList.remove('show-dialog');
+            input.classList.add('hide-add-item-input');
+            input.classList.remove('show-add-item-input');
+            return;
+        }
+        input.classList.remove('hide-add-item-input');
+        input.classList.add('show-add-item-input');
+        dialog.classList.remove('hide-dialog');
+        dialog.classList.add('show-dialog');
     }
 
     showAddTaskInput(event) {
         event.preventDefault();
-        let input = document.body.querySelector('.add-task-input');
-        input.classList.remove('hide-input');
-        input.classList.add('show-input');
+        console.log('showAddTaskInput');
+        let addTaskInput = document.body.querySelector('.add-task-input');
+        addTaskInput.classList.remove('hide-input');
+        addTaskInput.classList.add('show-input');
     }
 
     hideAddTaskInput(event) {

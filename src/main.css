@@ -137,7 +137,6 @@ input[type="text"] {
 		bottom: 0; 
 		visibility: hidden;
 	}
-	
 } 
 
 .button-login {
@@ -229,17 +228,113 @@ header h2 {
 	bottom: 1em;
 }
 
-.add-item-div {
-	height: 3em;
-	width: 14em;
+.button-add:focus, .add-item-dialog:focus, .add-item-input:focus {
+	outline: none;
+	outline-style:none;
+	border: 0;
+}
+
+.add-item-dialog, .add-item-input {
+	box-sizing: border-box;
+	visibility: hidden;
+	height: 0;
+	width: 0;
+}
+.add-item-input{
+	position: relative;
+}
+
+.add-item-dialog {
 	padding: 1em;
 	background-color: #37a0e5;
-	border: 1.6px solid #379fe5c7;
 	color: white;
 	position: absolute;
 	bottom: 3em;
 	right: 3em;
 }
+
+.show-dialog {
+	animation-name: show-item-dialog;
+	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+@keyframes show-item-dialog{
+	0%   {
+		height: 0;
+		width: 0;
+		visibility: hidden;
+	}
+	100% {
+		height: 5em;
+		width: 20em;
+		visibility: visible;
+	}
+} 
+
+.hide-dialog {
+	animation-name: hide-item-dialog;
+	animation-duration: 1s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-delay: 0s;
+}
+
+@keyframes hide-item-dialog{
+	0% {
+		height: 5em;
+		width: 20em;
+		visibility: visible;
+	}
+	100%   {
+		height: 0;
+		width: 0;
+		visibility: hidden;
+	}
+} 
+
+.show-add-item-input {
+	animation-name: show-item-input;
+	animation-duration: 0.6s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-delay: 0.3s;
+}
+
+@keyframes show-item-input{
+	0%   {
+		height: 0;
+		width: 0;
+		visibility: hidden;
+	}
+	100% {
+		height: 2em;
+		width: 10em;
+		visibility: visible;
+	}
+} 
+
+.hide-add-item-input {
+	animation-name: hide-item-input;
+	animation-duration: 0.4s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	/* animation-delay: 0.1s; */
+}
+
+@keyframes hide-item-input{
+	0% {
+		height: 2em;
+		width: 10em;
+		visibility: visible;
+	}
+	100%   {
+		height: 0;
+		width: 0;
+		visibility: hidden;
+	}
+} 
 
 /* .checkbox input[type="checkbox"] {
     opacity: 0;
