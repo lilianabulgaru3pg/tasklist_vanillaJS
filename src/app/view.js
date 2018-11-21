@@ -124,7 +124,7 @@ export default class View {
         return taskFragment;
     }
 
-    addNewTask(task) {
+    showNewTask(task) {
         console.log('task added', task);
         let ulEl = document.body.querySelector('.user-tasks');
         let childNode = document.createElement('li');
