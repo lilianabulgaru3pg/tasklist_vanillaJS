@@ -27,7 +27,7 @@ export default class View {
 
         let addTaskEl = this.createChildNode(mainEl, 'input', 'add-task-input', null, { type: 'text' })
         let addTaskBtnEl = this.createChildNode(mainEl, 'button', 'button-task button-style-1', 'Add Task');
-        addTaskBtnEl.addEventListener('click', (event) => this.delegate.createTaskBtn(event));
+        addTaskBtnEl.addEventListener('click', (event) => this.delegate.createTask(event));
         addTaskBtnEl.addEventListener('mouseover', (event) => this.showAddTaskInput(event));
         divEl.addEventListener('mouseup', (event) => this.hideAddTaskInput(event));
 
@@ -62,6 +62,8 @@ export default class View {
         input.classList.add('show-add-item-input');
         dialog.classList.remove('hide-dialog');
         dialog.classList.add('show-dialog');
+
+
     }
 
     showAddTaskInput(event) {

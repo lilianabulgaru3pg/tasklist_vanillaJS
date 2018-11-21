@@ -43,7 +43,7 @@ export default class ViewController {
         console.log('onpopstate');
     }
 
-    createTaskBtn(event) {
+    createTask(event) {
         event.preventDefault();
         var addtaskInput = document.body.querySelector('.add-task-input');
         if (!addtaskInput.value) return;
@@ -52,7 +52,7 @@ export default class ViewController {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         });
-        response.then((newTask) => this.view.addNewTask(newTask)).catch((err) => console.log(err))
+        response.then((newTask) => this.view.showNewTask(newTask)).catch((err) => console.log(err))
         addtaskInput.value = '';
     }
 
