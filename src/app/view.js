@@ -1,8 +1,16 @@
 import { user } from "../model/model.js"
 export default class View {
     constructor(delegate) {
-        console.log('view');
         this.delegate = delegate;
+        this.form = document.querySelector("#loginform");
+        this.init();
+    }
+    init() {
+        this.form.onsubmit = ((event) => {
+            event.preventDefault();
+            var formData = new FormData(this.form);
+            this.delegate.loginRequest(formData);
+        });
     }
 
     showPage2Content(items) {
@@ -38,7 +46,6 @@ export default class View {
     }
 
     showAddTaskInput(event) {
-        console.log('toggle');
         event.preventDefault();
         let input = document.body.querySelector('.add-task-input');
         input.classList.remove('hide-input');

@@ -6,17 +6,11 @@ export default class ViewController {
     constructor() {
         this.view = new View();
         this.view.delegate = this;
-        this.form = document.querySelector("#loginform");
-        this.init();
     }
 
-    init() {
-        this.form.onsubmit = ((event) => {
-            event.preventDefault();
-            var formData = new FormData(this.form);
-            var response = RequestManager.postData('user-tasks', formData, {});
-            response.then((res) => this.responseCallback(res)).catch((err) => console.log(err))
-        });
+    loginRequest(formData) {
+        var response = RequestManager.postData('user-tasks', formData, {});
+        response.then((res) => this.responseCallback(res)).catch((err) => console.log(err))
     }
 
     responseCallback(response) {
