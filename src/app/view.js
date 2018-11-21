@@ -1,8 +1,8 @@
-import { user } from "../model/model.js"
 export default class View {
     constructor(delegate) {
         this.delegate = delegate;
         this.form = document.querySelector("#loginform");
+        this.activeLinkItems = 0;
         this.init();
     }
     init() {
@@ -13,7 +13,7 @@ export default class View {
         });
     }
 
-    showPage2Content(items) {
+    showPage2Content(items, userTasks, username) {
 
         var child = document.body.querySelector('.page-1');
         document.body.removeChild(child);
@@ -21,15 +21,21 @@ export default class View {
         var fragment = document.createDocumentFragment();
         let divEl = this.createChildNode(fragment, 'div', 'flex-container page-2');
         let mainEl = this.createChildNode(divEl, 'main', 'flex-item-3 left-card-2 blue-bg');
-        let h2El = this.createChildNode(mainEl, 'h2', 'user-content', user.name);
-        let taskNodes = this.createTasks(user.tasks);
+        let h2El = this.createChildNode(mainEl, 'h2', 'user-content', username);
+        let taskNodes = this.createTasks(userTasks);
         mainEl.appendChild(taskNodes);
 
         let addTaskEl = this.createChildNode(mainEl, 'input', 'add-task-input', null, { type: 'text' })
         let addTaskBtnEl = this.createChildNode(mainEl, 'button', 'button-task button-style-1', 'Add Task');
-        addTaskBtnEl.addEventListener('click', (event) => this.delegate.createTask(event));
+        addTaskBtnEl.addEventListener('click', (event) => {
+            event.preventDefault();
+            var addtaskInput = document.body.querySelector('.add-task-input');
+            if (!addtaskInput.value) return;
+            this.delegate.createTask(addtaskInput.value);
+            addtaskInput.value = '';
+        });
         addTaskBtnEl.addEventListener('mouseover', (event) => this.showAddTaskInput(event));
-        divEl.addEventListener('mouseup', (event) => this.hideAddTaskInput(event));
+        divEl.addEventListener('mouseup', (event) => this.hideInputDialogs(event));
 
         let asideEl = this.createChildNode(divEl, 'aside', 'flex-item-4 right-card-2');
         let headerEl = this.createChildNode(asideEl, 'header');
@@ -49,21 +55,37 @@ export default class View {
     }
     showAddItemView(event) {
         event.preventDefault();
+        console.log('dialog')
         var dialog = document.body.querySelector('.add-item-dialog');
         var input = document.body.querySelector('.add-item-input');
-        if (dialog.classList.contains('show-dialog')) {
-            dialog.classList.add('hide-dialog');
-            dialog.classList.remove('show-dialog');
-            input.classList.add('hide-add-item-input');
-            input.classList.remove('show-add-item-input');
+        var addBtn = document.body.querySelector('.button-add');
+
+        if (input.isEqualNode(event.target)) return;
+
+        if (addBtn.isEqualNode(event.target) && dialog.classList.contains('show-dialog')) {
+            input.value ? this.delegate.createItem(input.value) : false;
+            this.hideDialog();
             return;
         }
+        this.showDialog();
+    }
+
+    hideDialog() {
+        var dialog = document.body.querySelector('.add-item-dialog');
+        var input = document.body.querySelector('.add-item-input');
+        dialog.classList.add('hide-dialog');
+        dialog.classList.remove('show-dialog');
+        input.classList.add('hide-add-item-input');
+        input.classList.remove('show-add-item-input');
+    }
+
+    showDialog() {
+        var dialog = document.body.querySelector('.add-item-dialog');
+        var input = document.body.querySelector('.add-item-input');
         input.classList.remove('hide-add-item-input');
         input.classList.add('show-add-item-input');
         dialog.classList.remove('hide-dialog');
         dialog.classList.add('show-dialog');
-
-
     }
 
     showAddTaskInput(event) {
@@ -74,12 +96,12 @@ export default class View {
         addTaskInput.classList.add('show-input');
     }
 
-    hideAddTaskInput(event) {
+    hideInputDialogs(event) {
         event.preventDefault();
-        var input = document.body.querySelector('.add-task-input');
-        if (!input.isEqualNode(event.target)) {
-            input.classList.add('hide-input');
-            input.classList.remove('show-input');
+        var taskInput = document.body.querySelector('.add-task-input');
+        if (!taskInput.isEqualNode(event.target)) {
+            taskInput.classList.add('hide-input');
+            taskInput.classList.remove('show-input');
         }
     }
 
@@ -93,6 +115,7 @@ export default class View {
             childNode.innerHTML = `<input  type='checkbox' data-index=${i} ${completed ? 'checked' : ''} id = 'checkbox-${i}'><label for='checkbox-${i}'>${title}</label>`;
             ulEl.appendChild(childNode);
         }
+        this.activeLinkItems = i;
         return taskFragment;
     }
 
@@ -129,6 +152,16 @@ export default class View {
         let ulEl = document.body.querySelector('.user-tasks');
         let childNode = document.createElement('li');
         childNode.innerHTML = `<a href = user-tasks/${task._id}/items>${task.title}</a>`;
+        ulEl.appendChild(childNode);
+    }
+
+    showNewItem(item) {
+        console.log('item added', item);
+        let ulEl = this.createChildNode(taskFragment, 'ul', 'items-list');
+        let i = this.activeLinkItems;
+        let childNode = document.createElement('li');
+        childNode.className = 'checkbox';
+        childNode.innerHTML = `<input  type='checkbox' data-index=${i} ${item.completed ? 'checked' : ''} id = 'checkbox-${i}'><label for='checkbox-${i}'>${item.title}</label>`;
         ulEl.appendChild(childNode);
     }
 

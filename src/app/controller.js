@@ -6,6 +6,8 @@ export default class ViewController {
     constructor() {
         this.view = new View();
         this.view.delegate = this;
+        this.activeLinkID = '';
+        this.user = user;
     }
 
     loginRequest(formData) {
@@ -13,26 +15,26 @@ export default class ViewController {
         response.then((res) => this.responseCallback(res)).catch((err) => console.log(err))
     }
 
-    responseCallback(response) {
-        user.tasks = response;
-        user.name = document.getElementById("username").value;
+    responseCallback(userTasks) {
+        let username = document.getElementById("username").value;
         history.pushState({}, "User Tasks", "user-tasks");
-        let firstTask = response[0];
+        let firstTask = userTasks[0];
         console.log('firstTask', firstTask);
+        this.activeLinkID = firstTask._id;
         let itemsResponse = RequestManager.getItemsForTask(`user-tasks/${firstTask._id}/items`);
-        itemsResponse.then((res) => {
-            this.view.showPage2Content(res);
+        itemsResponse.then((items) => {
+            this.view.showPage2Content(items, userTasks, username);
         }).catch((err) => console.log(err));
     }
 
     onTaskLinkClick(event) {
         event.preventDefault();
-        var href = event.target.getAttribute('href');
-        // var title = event.target.getAttribute('text');
-        // history.pushState({}, title, href);
-        if (href == undefined) { return }
-        let response = RequestManager.getItemsForTask(href);
-        console.log('url', href);
+        this.activeLinkID = event.target.getAttribute('href');;
+        // var title = event.target.textContent;
+        // history.pushState({}, 'title', href);
+        if (this.activeLinkID == undefined) { return }
+        let response = RequestManager.getItemsForTask(this.activeLinkID);
+        console.log('url', this.activeLinkID);
         response.then((res) => {
             console.log('recreateTaskItems with items', res);
             this.view.recreateTaskItems(res);
@@ -43,17 +45,20 @@ export default class ViewController {
         console.log('onpopstate');
     }
 
-    createTask(event) {
-        event.preventDefault();
-        var addtaskInput = document.body.querySelector('.add-task-input');
-        if (!addtaskInput.value) return;
-        console.log('addtaskInput.value', addtaskInput.value);
-        let response = RequestManager.postData('user-tasks/add-task', JSON.stringify({ title: addtaskInput.value }), {
+    createTask(value) {
+        let response = RequestManager.postData('user-tasks/add-task', JSON.stringify({ title: value }), {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         });
         response.then((newTask) => this.view.showNewTask(newTask)).catch((err) => console.log(err))
-        addtaskInput.value = '';
+    }
+
+    createItem(value) {
+        let response = RequestManager.postData(`user-tasks/${this.activeLinkID}/add-item`, JSON.stringify({ title: value }), {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
+        response.then((newItem) => this.view.showNewTask(newTask)).catch((err) => console.log(err))
     }
 
     taskItemDone(event) {
