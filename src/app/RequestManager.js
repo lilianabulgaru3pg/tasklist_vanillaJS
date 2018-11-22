@@ -1,14 +1,21 @@
 import 'whatwg-fetch'
+const { Url } = require('url');
 
 class RequestManager {
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
     }
 
-    async requestData(method, url, data, headersData) {
+    async requestData(method, urlPath, data = null, headersData = {}, params = '') {
         try {
-            console.log('data', data, 'url', `${this.baseUrl}/${url}`, headersData);
-            var response = await fetch(`${this.baseUrl}/${url}`, {
+            var Url = `${this.baseUrl}/${urlPath}`;
+            if (params) {
+                Url = new URL(`${this.baseUrl}/${urlPath}`);
+                Object.keys(params).forEach(key => Url.searchParams.append(key, params[key]))
+            }
+
+            console.log('data', data, 'url', Url, headersData, 'params', params);
+            var response = await fetch(Url, {
                 method: method,
                 body: data,
                 headers: headersData

@@ -40,6 +40,8 @@ export default class View {
         let hEl = this.createChildNode(headerEl, 'h2', null, 'To-do List');
         let searchEl = this.createChildNode(headerEl, 'input', 'search-input', null, { type: 'text' }, { placeholder: 'Search' })
         let searchBtnEl = this.createChildNode(headerEl, 'button', 'button-search  button-style-1', 'Search');
+        searchBtnEl.addEventListener('click', (event) => this.searchForString(event));
+
         let sectionEl = this.createChildNode(asideEl, 'section', 'items-section');
         sectionEl.addEventListener('click', (event) => this.taskItemDone(event));
         let itemsChildNodes = this.createTaskItems(items);
@@ -57,6 +59,13 @@ export default class View {
 
     showUserName(event) {
         event.target.textContent = this.username;
+    }
+
+    searchForString(event) {
+        event.preventDefault();
+        let itemSearchInput = document.body.querySelector('.search-input').value;
+
+        this.delegate.searchItem(itemSearchInput);
     }
 
     addTaskButtonEvent(event) {
@@ -157,7 +166,7 @@ export default class View {
         console.log(tasks);
         for (let { _id, title } of tasks) {
             let childNode = document.createElement('li');
-            childNode.innerHTML = `<a href = user-tasks/${_id}/items>${title}</a>`;
+            childNode.innerHTML = `<a href = tasks/${_id}/items>${title}</a>`;
             ulEl.appendChild(childNode);
         }
         return taskFragment;
@@ -167,7 +176,7 @@ export default class View {
         console.log('task added', task);
         let ulEl = document.body.querySelector('.user-tasks');
         let childNode = document.createElement('li');
-        childNode.innerHTML = `<a href = user-tasks/${task._id}/items>${task.title}</a>`;
+        childNode.innerHTML = `<a href = tasks/${task._id}/items>${task.title}</a>`;
         ulEl.appendChild(childNode);
     }
 
