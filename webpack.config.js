@@ -51,6 +51,7 @@ module.exports = {
         port: 3000,
         watchContentBase: true,
         proxy: {
+            '/': 'http://localhost:3000/',
             '/user-tasks': 'http://localhost:3000/user-tasks',
             '/user-tasks/add-task': 'http://localhost:3000/user-tasks/add-task'
         },
