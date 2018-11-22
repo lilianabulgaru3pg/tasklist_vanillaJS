@@ -2,7 +2,8 @@ export default class View {
     constructor(delegate) {
         this.delegate = delegate;
         this.form = document.querySelector("#loginform");
-        this.activeLinkItems = 0;
+        this.activeLinkItems = [];
+        this.username = '';
         this.init();
     }
     init() {
@@ -14,7 +15,7 @@ export default class View {
     }
 
     showPage2Content(items, userTasks, username) {
-
+        this.username = username;
         var child = document.body.querySelector('.page-1');
         document.body.removeChild(child);
 
@@ -22,18 +23,15 @@ export default class View {
         let divEl = this.createChildNode(fragment, 'div', 'flex-container page-2');
         let mainEl = this.createChildNode(divEl, 'main', 'flex-item-3 left-card-2 blue-bg');
         let h2El = this.createChildNode(mainEl, 'h2', 'user-content', username);
+        h2El.addEventListener('click', (event) => this.delegate.logout());
+        h2El.addEventListener('mouseover', (event) => this.showLogoutMessage(event));
+        h2El.addEventListener('mouseout', (event) => this.showUserName(event));
         let taskNodes = this.createTasks(userTasks);
         mainEl.appendChild(taskNodes);
 
         let addTaskEl = this.createChildNode(mainEl, 'input', 'add-task-input', null, { type: 'text' })
         let addTaskBtnEl = this.createChildNode(mainEl, 'button', 'button-task button-style-1', 'Add Task');
-        addTaskBtnEl.addEventListener('click', (event) => {
-            event.preventDefault();
-            var addtaskInput = document.body.querySelector('.add-task-input');
-            if (!addtaskInput.value) return;
-            this.delegate.createTask(addtaskInput.value);
-            addtaskInput.value = '';
-        });
+        addTaskBtnEl.addEventListener('click', (event) => this.addTaskButtonEvent(event));
         addTaskBtnEl.addEventListener('mouseover', (event) => this.showAddTaskInput(event));
         divEl.addEventListener('mouseup', (event) => this.hideInputDialogs(event));
 
@@ -43,19 +41,34 @@ export default class View {
         let searchEl = this.createChildNode(headerEl, 'input', 'search-input', null, { type: 'text' }, { placeholder: 'Search' })
         let searchBtnEl = this.createChildNode(headerEl, 'button', 'button-search  button-style-1', 'Search');
         let sectionEl = this.createChildNode(asideEl, 'section', 'items-section');
-        sectionEl.addEventListener('click', (event) => this.delegate.taskItemDone(event));
+        sectionEl.addEventListener('click', (event) => this.taskItemDone(event));
         let itemsChildNodes = this.createTaskItems(items);
         sectionEl.appendChild(itemsChildNodes);
         let addItemBtnEl = this.createChildNode(sectionEl, 'button', 'button-add', '+');
         addItemBtnEl.addEventListener('click', (event) => this.showAddItemView(event));
         let addItemDiv = this.createChildNode(addItemBtnEl, 'div', 'add-item-dialog');
         let addItemEl = this.createChildNode(addItemDiv, 'input', 'add-item-input', null, { type: 'text' })
-
         document.body.appendChild(fragment);
     }
+
+    showLogoutMessage(event) {
+        event.target.textContent = 'Logout';
+    }
+
+    showUserName(event) {
+        event.target.textContent = this.username;
+    }
+
+    addTaskButtonEvent(event) {
+        event.preventDefault();
+        let addtaskInput = document.body.querySelector('.add-task-input');
+        if (!addtaskInput.value) return;
+        this.delegate.createTask(addtaskInput.value);
+        addtaskInput.value = '';
+    }
+
     showAddItemView(event) {
         event.preventDefault();
-        console.log('dialog')
         var dialog = document.body.querySelector('.add-item-dialog');
         var input = document.body.querySelector('.add-item-input');
         var addBtn = document.body.querySelector('.button-add');
@@ -63,7 +76,10 @@ export default class View {
         if (input.isEqualNode(event.target)) return;
 
         if (addBtn.isEqualNode(event.target) && dialog.classList.contains('show-dialog')) {
-            input.value ? this.delegate.createItem(input.value) : false;
+            if (input.value) {
+                this.delegate.createItem(input.value)
+                input.value = '';
+            }
             this.hideDialog();
             return;
         }
@@ -90,7 +106,6 @@ export default class View {
 
     showAddTaskInput(event) {
         event.preventDefault();
-        console.log('showAddTaskInput');
         let addTaskInput = document.body.querySelector('.add-task-input');
         addTaskInput.classList.remove('hide-input');
         addTaskInput.classList.add('show-input');
@@ -114,8 +129,9 @@ export default class View {
             childNode.className = 'checkbox';
             childNode.innerHTML = `<input  type='checkbox' data-index=${i} ${completed ? 'checked' : ''} id = 'checkbox-${i}'><label for='checkbox-${i}'>${title}</label>`;
             ulEl.appendChild(childNode);
+            i++;
         }
-        this.activeLinkItems = i;
+        this.activeLinkItems = taskItems;
         return taskFragment;
     }
 
@@ -158,7 +174,8 @@ export default class View {
     showNewItem(item) {
         console.log('item added', item);
         let ulEl = document.body.querySelector('.items-list');
-        let i = this.activeLinkItems;
+        let i = this.activeLinkItems.length;
+        this.activeLinkItems.push(item);
         let childNode = document.createElement('li');
         childNode.className = 'checkbox';
         childNode.innerHTML = `<input  type='checkbox' data-index=${i} ${item.completed ? 'checked' : ''} id = 'checkbox-${i}'><label for='checkbox-${i}'>${item.title}</label>`;
@@ -179,7 +196,13 @@ export default class View {
         return childNode;
     }
 
-    updateItemsList(items) {
-        console.log('items', items);
+    taskItemDone(event) {
+        // event.preventDefault();
+        if (event.target.getAttribute('type') !== 'checkbox') return;
+        let checked = event.target.checked;
+        let checkBoxIndex = event.target.dataset.index;
+        let checkedItem = this.activeLinkItems[checkBoxIndex];
+        console.log('checkedItem', checkedItem);
+        this.delegate.checkItem(checkedItem, checked);
     }
 }
