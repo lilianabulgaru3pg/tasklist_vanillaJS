@@ -39,7 +39,7 @@ export default class View {
 
         let asideEl = this.createChildNode(divEl, 'aside', 'flex-item-4 right-card-2');
         let headerEl = this.createChildNode(asideEl, 'header');
-        let hEl = this.createChildNode(headerEl, 'h2', null, '');
+        let hEl = this.createChildNode(headerEl, 'h2', null, 'To-do List');
         let searchEl = this.createChildNode(headerEl, 'input', 'search-input', null, { type: 'text' }, { placeholder: 'Search' })
         let searchBtnEl = this.createChildNode(headerEl, 'button', 'button-search  button-style-1', 'Search');
         let sectionEl = this.createChildNode(asideEl, 'section', 'items-section');
@@ -157,7 +157,7 @@ export default class View {
 
     showNewItem(item) {
         console.log('item added', item);
-        let ulEl = this.createChildNode(taskFragment, 'ul', 'items-list');
+        let ulEl = document.body.querySelector('.items-list');
         let i = this.activeLinkItems;
         let childNode = document.createElement('li');
         childNode.className = 'checkbox';

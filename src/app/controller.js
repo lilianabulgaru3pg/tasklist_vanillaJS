@@ -29,15 +29,16 @@ export default class ViewController {
 
     onTaskLinkClick(event) {
         event.preventDefault();
-        this.activeLinkID = event.target.getAttribute('href');;
+        var url = event.target.getAttribute('href');;
         // var title = event.target.textContent;
         // history.pushState({}, 'title', href);
-        if (this.activeLinkID == undefined) { return }
-        let response = RequestManager.getItemsForTask(this.activeLinkID);
-        console.log('url', this.activeLinkID);
-        response.then((res) => {
-            console.log('recreateTaskItems with items', res);
-            this.view.recreateTaskItems(res);
+        if (url === undefined) { return }
+        this.activeLinkID = url.split('/')[1];
+        let response = RequestManager.getItemsForTask(url);
+        console.log('url', url);
+        response.then((items) => {
+            console.log('recreateTaskItems with items', items);
+            this.view.recreateTaskItems(items);
         }).catch(err => console.log(err));
     }
 
@@ -47,18 +48,18 @@ export default class ViewController {
 
     createTask(value) {
         let response = RequestManager.postData('user-tasks/add-task', JSON.stringify({ title: value }), {
-            'Accept': 'application/json',
+            // 'Accept': 'application/json',
             'Content-Type': 'application/json'
         });
         response.then((newTask) => this.view.showNewTask(newTask)).catch((err) => console.log(err))
     }
 
     createItem(value) {
-        let response = RequestManager.postData(`user-tasks/${this.activeLinkID}/add-item`, JSON.stringify({ title: value }), {
-            'Accept': 'application/json',
+        console.log('activeLinkID', this.activeLinkID);
+        let response = RequestManager.postData(`user-tasks/${this.activeLinkID}/add-item`, JSON.stringify({ text: value }), {
             'Content-Type': 'application/json'
         });
-        response.then((newItem) => this.view.showNewTask(newTask)).catch((err) => console.log(err))
+        response.then((newItem) => this.view.showNewItem(newItem)).catch((err) => console.log(err))
     }
 
     taskItemDone(event) {

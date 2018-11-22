@@ -52,7 +52,7 @@ module.exports = {
         watchContentBase: true,
         proxy: {
             '/user-tasks': 'http://localhost:3000/user-tasks',
-            '/user-tasks/add-task': 'http://localhost:3000/user-tasks/add-task',
+            '/user-tasks/add-task': 'http://localhost:3000/user-tasks/add-task'
         },
         historyApiFallback: true,
         watchOptions: { aggregateTimeout: 300, poll: 1000 },
