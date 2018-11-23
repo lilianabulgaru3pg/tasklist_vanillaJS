@@ -123,7 +123,7 @@ export default class View {
     hideInputDialogs(event) {
         event.preventDefault();
         var taskInput = document.body.querySelector('.add-task-input');
-        if (!taskInput.isEqualNode(event.target)) {
+        if (!taskInput.isEqualNode(event.target) && taskInput.classList.contains('hide-input')) {
             taskInput.classList.add('hide-input');
             taskInput.classList.remove('show-input');
         }
