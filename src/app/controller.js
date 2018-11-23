@@ -41,8 +41,6 @@ export default class ViewController {
     onTaskLinkClick(event) {
         event.preventDefault();
         var url = event.target.getAttribute('href');;
-        // var title = event.target.textContent;
-        // history.pushState({}, 'title', href);
         if (!url) { return }
         this.activeTaskID = url.split('/')[1];
         let response = RequestManager.requestData('GET', url);
@@ -82,13 +80,13 @@ export default class ViewController {
         response.then(() => console.log('check status saved')).catch((err) => console.log(err));
     }
 
-    searchItem(text) {
-        let response = RequestManager.requestData('GET', 'tasks/search', null, {}, { content: text, taskId: this.activeTaskID });
+    searchItem(searchedText) {
+        let response = RequestManager.requestData('GET', 'tasks/search', null, {}, { content: searchedText, taskId: this.activeTaskID });
         response.then((searchedItems) => {
             console.log('searchedItems', searchedItems);
             // let items = searchedItems.find((taskId) => (taskId._id === this.activeTaskID));
             this.activeTaskItems = searchedItems;
-            searchedItems.length === 1 ? this.view.createTaskItems(searchedItems) : this.view.recreateTaskItems(searchedItems)
+            this.view.recreateTaskItems(searchedItems)
         }).catch((err) => console.log(err))
     }
 

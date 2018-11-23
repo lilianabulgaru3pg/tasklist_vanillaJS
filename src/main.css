@@ -214,6 +214,7 @@ header h2 {
 	margin: 1em;
 	height: 70%;
 	position: relative;
+	overflow:hidden;
 }
 
 .button-add {
@@ -224,8 +225,8 @@ header h2 {
 	color: white;
 	border-radius: 3em;
 	position: absolute;
-	right: 1em;
-	bottom: 1em;
+	right: 2em;
+	bottom: 4em;
 }
 
 .button-add:focus, .add-item-dialog:focus, .add-item-input:focus {

@@ -39,6 +39,7 @@ export default class View {
         let headerEl = this.createChildNode(asideEl, 'header');
         let hEl = this.createChildNode(headerEl, 'h2', null, 'To-do List');
         let searchEl = this.createChildNode(headerEl, 'input', 'search-input', null, { type: 'text' }, { placeholder: 'Search' })
+
         let searchBtnEl = this.createChildNode(headerEl, 'button', 'button-search  button-style-1', 'Search');
         searchBtnEl.addEventListener('click', (event) => this.searchForString(event));
 
@@ -46,7 +47,7 @@ export default class View {
         sectionEl.addEventListener('click', (event) => this.taskItemDone(event));
         let itemsChildNodes = this.createTaskItems(items);
         sectionEl.appendChild(itemsChildNodes);
-        let addItemBtnEl = this.createChildNode(sectionEl, 'button', 'button-add', '+');
+        let addItemBtnEl = this.createChildNode(asideEl, 'button', 'button-add', '+');
         addItemBtnEl.addEventListener('click', (event) => this.showAddItemView(event));
         let addItemDiv = this.createChildNode(addItemBtnEl, 'div', 'add-item-dialog');
         let addItemEl = this.createChildNode(addItemDiv, 'input', 'add-item-input', null, { type: 'text' })
@@ -63,10 +64,11 @@ export default class View {
 
     searchForString(event) {
         event.preventDefault();
-        let itemSearchInput = document.body.querySelector('.search-input').value;
-
-        this.delegate.searchItem(itemSearchInput);
+        let itemSearchInput = document.body.querySelector('.search-input');
+        this.delegate.searchItem(itemSearchInput.value);
+        itemSearchInput.value = '';
     }
+
 
     addTaskButtonEvent(event) {
         event.preventDefault();
@@ -87,9 +89,8 @@ export default class View {
         if (addBtn.isEqualNode(event.target) && dialog.classList.contains('show-dialog')) {
             if (input.value) {
                 this.delegate.createItem(input.value)
-                input.value = '';
+                this.hideDialog();
             }
-            this.hideDialog();
             return;
         }
         this.showDialog();
@@ -123,7 +124,7 @@ export default class View {
     hideInputDialogs(event) {
         event.preventDefault();
         var taskInput = document.body.querySelector('.add-task-input');
-        if (!taskInput.isEqualNode(event.target) && taskInput.classList.contains('hide-input')) {
+        if (!taskInput.isEqualNode(event.target) && taskInput.classList.contains('show-input')) {
             taskInput.classList.add('hide-input');
             taskInput.classList.remove('show-input');
         }
