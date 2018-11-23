@@ -6,8 +6,9 @@ export default class ViewController {
     constructor() {
         this.view = new View();
         this.view.delegate = this;
-        this.activeLinkID = '';
+        this.activeTaskID = '';
         this.user = user;
+        this.activeTaskItems = [];
     }
 
     loginRequest(formData) {
@@ -29,9 +30,10 @@ export default class ViewController {
         history.pushState({}, "User Tasks", "tasks");
         let firstTask = userTasks[0];
         console.log('firstTask', firstTask);
-        this.activeLinkID = firstTask._id;
+        this.activeTaskID = firstTask._id;
         let itemsResponse = RequestManager.requestData('GET', `tasks/${firstTask._id}/items`);
         itemsResponse.then((items) => {
+            this.activeTaskItems = items;
             this.view.showPage2Content(items, userTasks, username);
         }).catch((err) => console.log(err));
     }
@@ -42,17 +44,14 @@ export default class ViewController {
         // var title = event.target.textContent;
         // history.pushState({}, 'title', href);
         if (!url) { return }
-        this.activeLinkID = url.split('/')[1];
+        this.activeTaskID = url.split('/')[1];
         let response = RequestManager.requestData('GET', url);
         console.log('url', url);
         response.then((items) => {
             console.log('recreateTaskItems with items', items);
+            this.activeTaskItems = items;
             this.view.recreateTaskItems(items);
         }).catch(err => console.log(err));
-    }
-
-    onpopstate(event) {
-        console.log('onpopstate');
     }
 
     createTask(value) {
@@ -63,24 +62,33 @@ export default class ViewController {
     }
 
     createItem(value) {
-        console.log('item id', this.activeLinkID);
-        let response = RequestManager.requestData('POST', `tasks/${this.activeLinkID}/add-item`, JSON.stringify({ text: value }), {
+        console.log('item id', this.activeTaskID);
+        let response = RequestManager.requestData('POST', `tasks/${this.activeTaskID}/add-item`, JSON.stringify({ text: value }), {
             'Content-Type': 'application/json'
         });
-        response.then((newItem) => this.view.showNewItem(newItem)).catch((err) => console.log(err))
+        response.then((newItem) => {
+            let idx = this.activeTaskItems.length;
+            this.activeTaskItems.push(newItem);
+            this.view.showNewItem(newItem, idx)
+        }).catch((err) => console.log(err))
     }
 
-    checkItem(item, checked) {
-        let response = RequestManager.requestData('PUT', `tasks/${item._id}/update`, JSON.stringify({ completed: checked }), {
+    checkItem(checkBoxIndex, checked) {
+        let checkedItem = this.activeTaskItems[checkBoxIndex];
+        console.log('checkedItem', checkedItem);
+        let response = RequestManager.requestData('PUT', `tasks/${checkedItem._id}/update`, JSON.stringify({ completed: checked }), {
             'Content-Type': 'application/json'
         });
         response.then(() => console.log('check status saved')).catch((err) => console.log(err));
     }
 
     searchItem(text) {
-        let response = RequestManager.requestData('GET', 'tasks/search', null, {}, { content: text });
+        let response = RequestManager.requestData('GET', 'tasks/search', null, {}, { content: text, taskId: this.activeTaskID });
         response.then((searchedItems) => {
-            this.view.recreateTaskItems(searchedItems)
+            console.log('searchedItems', searchedItems);
+            // let items = searchedItems.find((taskId) => (taskId._id === this.activeTaskID));
+            this.activeTaskItems = searchedItems;
+            searchedItems.length === 1 ? this.view.createTaskItems(searchedItems) : this.view.recreateTaskItems(searchedItems)
         }).catch((err) => console.log(err))
     }
 

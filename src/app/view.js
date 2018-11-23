@@ -2,7 +2,7 @@ export default class View {
     constructor(delegate) {
         this.delegate = delegate;
         this.form = document.querySelector("#loginform");
-        this.activeLinkItems = [];
+
         this.username = '';
         this.init();
     }
@@ -140,7 +140,6 @@ export default class View {
             ulEl.appendChild(childNode);
             i++;
         }
-        this.activeLinkItems = taskItems;
         return taskFragment;
     }
 
@@ -148,7 +147,7 @@ export default class View {
         var fragment = document.createDocumentFragment();
         let sectionEl = document.body.querySelector('.items-section');
         let elEl = sectionEl.querySelector('.items-list');
-        sectionEl.removeChild(elEl);
+        elEl ? sectionEl.removeChild(elEl) : false;
         console.log('recreateTaskItems', taskItems);
         var itemsChildNodes = this.createTaskItems(taskItems);
         fragment.appendChild(itemsChildNodes);
@@ -180,14 +179,12 @@ export default class View {
         ulEl.appendChild(childNode);
     }
 
-    showNewItem(item) {
+    showNewItem(item, index) {
         console.log('item added', item);
         let ulEl = document.body.querySelector('.items-list');
-        let i = this.activeLinkItems.length;
-        this.activeLinkItems.push(item);
         let childNode = document.createElement('li');
         childNode.className = 'checkbox';
-        childNode.innerHTML = `<input  type='checkbox' data-index=${i} ${item.completed ? 'checked' : ''} id = 'checkbox-${i}'><label for='checkbox-${i}'>${item.title}</label>`;
+        childNode.innerHTML = `<input  type='checkbox' data-index=${index} ${item.completed ? 'checked' : ''} id = 'checkbox-${index}'><label for='checkbox-${index}'>${item.title}</label>`;
         ulEl.appendChild(childNode);
     }
 
@@ -210,8 +207,6 @@ export default class View {
         if (event.target.getAttribute('type') !== 'checkbox') return;
         let checked = event.target.checked;
         let checkBoxIndex = event.target.dataset.index;
-        let checkedItem = this.activeLinkItems[checkBoxIndex];
-        console.log('checkedItem', checkedItem);
-        this.delegate.checkItem(checkedItem, checked);
+        this.delegate.checkItem(checkBoxIndex, checked);
     }
 }

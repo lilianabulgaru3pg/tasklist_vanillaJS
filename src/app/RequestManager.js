@@ -8,9 +8,9 @@ class RequestManager {
 
     async requestData(method, urlPath, data = null, headersData = {}, params = '') {
         try {
-            var Url = `${this.baseUrl}/${urlPath}`;
+            var Url = new URL(`${this.baseUrl}/${urlPath}`);
             if (params) {
-                Url = new URL(`${this.baseUrl}/${urlPath}`);
+
                 Object.keys(params).forEach(key => Url.searchParams.append(key, params[key]))
             }
 
