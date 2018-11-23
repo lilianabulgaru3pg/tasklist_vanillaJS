@@ -76,7 +76,7 @@ export default class ViewController {
     checkItem(checkBoxIndex, checked) {
         let checkedItem = this.activeTaskItems[checkBoxIndex];
         console.log('checkedItem', checkedItem);
-        let response = RequestManager.requestData('PUT', `tasks/${checkedItem._id}/update`, JSON.stringify({ completed: checked }), {
+        let response = RequestManager.requestData('PUT', `tasks/${checkedItem._id}/`, JSON.stringify({ completed: checked }), {
             'Content-Type': 'application/json'
         });
         response.then(() => console.log('check status saved')).catch((err) => console.log(err));
