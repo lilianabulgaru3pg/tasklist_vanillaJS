@@ -17,6 +17,9 @@
 ### 🏠 [Homepage](https://github.com/lilianabulgaru3pg/TodoListApp#readme)
 ![Capture](https://user-images.githubusercontent.com/13253931/61716212-502eec80-ad67-11e9-9190-c5826abfe669.PNG)
 
+![Capture1](https://user-images.githubusercontent.com/13253931/61717424-b1f05600-ad69-11e9-821f-a7e1440e68e7.PNG)
+
+
 ## Install
 
 ```sh
