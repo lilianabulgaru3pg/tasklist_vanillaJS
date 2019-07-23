@@ -15,6 +15,7 @@
 > Vanilla JavaScript TodoMVC Example
 
 ### 🏠 [Homepage](https://github.com/lilianabulgaru3pg/TodoListApp#readme)
+![Capture](https://user-images.githubusercontent.com/13253931/61716212-502eec80-ad67-11e9-9190-c5826abfe669.PNG)
 
 ## Install
 
