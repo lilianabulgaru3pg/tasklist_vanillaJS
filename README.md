@@ -61,7 +61,7 @@ yarn install
 ```sh
 yarn start
 or 
-yarn start:dev // to start the app with the webpack dev server
+yarn start:serv // to start the app with the webpack dev server
 ```
 
 ## Run tests
