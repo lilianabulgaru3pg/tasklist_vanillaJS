@@ -19,7 +19,36 @@
 
 ![Capture1](https://user-images.githubusercontent.com/13253931/61718062-df89cf00-ad6a-11e9-81cd-3f13db4b7774.PNG)
 
-<h4>Add a few Task list and add items to the list. Double-click/tap "Add task" to add tasks. Check-off your todos and navigate the footer to filter for keywords in the items list. Tap the right button in footer to Logout.<br> <a href="https://github.com/lilianabulgaru3pg/TodoListExpressServer"> Server site repository! </a> </h4>
+>Add a few Task list and add items to the list. Double-click/tap "Add task" to add tasks. Check-off your todos and navigate the footer to filter for keywords in the items list. Tap the right button in footer to Logout.<br> <a href="https://github.com/lilianabulgaru3pg/TodoListExpressServer"> Server site repository! </a>
+
+<hr />
+
+## Why?
+
+The _purpose_ of this **Todo List _mini_ project**
+is to _practice_ your "VanillaJS" skills and
+_consolidate_ your understanding of The MVC Architecture (TEA)
+creating a "real world" _useable_ App following _strict_
+Documentation.
+
+## What?
+
+Build a fully functional "Todo List" Application! <br />
+Along the way we will cover:
+
++ [x] Building an App using CSS Styles
++ [x] The Document Object Model (DOM)
++ [x] Event Delegation
++ [x] Login with a Server
++ [x] Keyboard event listeners for rapid todo list creation and items search!
+
+## _Who?_
+
+This tutorial is for anyone/everyone who wants
+to develop their "core" JavaScript skills (_without using a framework/library_)
+while building a "real world" (_fully functional_) Todo List Application. 
+
+<hr />
 
 ## Install
 
@@ -31,12 +60,33 @@ yarn install
 
 ```sh
 yarn start
+or 
+yarn start:dev // to start the app with the webpack dev server
 ```
 
 ## Run tests
 
 ```sh
 yarn test
+```
+### `model`
+
+```js
+user = {
+    name: '',
+    tasks: [{
+        _id: '',
+        title: '',
+        items: [taskItems]
+    }]
+};
+
+taskItems = {
+    _id: '',
+    task_id: '',
+    text: '',
+    completed: false
+};
 ```
 
 ## Author
